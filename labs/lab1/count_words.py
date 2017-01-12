@@ -1,10 +1,22 @@
 #!/usr/local/bin/python
+from collections import Counter
+import string
+f = open("gpl-3.0.txt")
+gpl = f.read()
+f.close()
 
-gpl = open("gpl-3.0.txt").read()
-
-punctuations = "~!@#$%^&*()-/?><,.{}][`'"
 transdict={}
-for punct in punctuations:
-	transdict[punct] =' '
+for punct in string.punctuation:
+	transdict[punct] =None
 
-fin = gpl.casefold().translate(str.maketrans(transdict)).split()
+gpl = gpl.casefold().translate(str.maketrans(transdict)).split()
+#gpl = gpl.translate(None,string.punctuation)
+#gpl = gpl.lower.split()
+counts = Counter(gpl)
+
+ofile = open('output.txt','w')
+for a in counts:
+	print(a, counts[a])
+	ofile.write(a + ': ' + str(counts[a])+ '\n')
+ofile.close()
+
